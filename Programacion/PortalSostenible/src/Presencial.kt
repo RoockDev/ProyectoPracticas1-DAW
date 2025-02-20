@@ -1,0 +1,2 @@
+class Presencial:Evento() {
+}

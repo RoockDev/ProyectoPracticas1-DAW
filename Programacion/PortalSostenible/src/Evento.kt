@@ -31,7 +31,7 @@ open class Evento {
     }
 
     // con este metodo comprobamos que solo pueda asistir un usuario si esta inscrito al evento
-    fun confirmaAsistencia(usuario: Usuarios):Boolean{
+    open fun confirmaAsistencia(usuario: Usuarios):Boolean{
         var asiste = false
         if (usuario in usuariosInscritos){
             usuariosAssitentes.add(usuario)
@@ -55,6 +55,11 @@ open class Evento {
         }else{
             println("El evento $nombre ya estaba cancelado")
         }
+    }
+
+    open fun elimirarInscripcion(usuario: Usuarios){
+        usuariosInscritos.remove(usuario)
+
     }
 
     override fun toString(): String {

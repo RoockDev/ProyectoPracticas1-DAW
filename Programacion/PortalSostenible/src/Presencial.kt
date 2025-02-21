@@ -11,7 +11,7 @@ class Presencial:Evento {
         contador++
     }
 
-    constructor(direccion:String){
+    constructor(direccion:String):super(){
         this.direccion = direccion
         idPresencial = contador
         contador++
@@ -20,5 +20,13 @@ class Presencial:Evento {
     override fun inscribirUsuario(usuario: Usuarios) {
         super.inscribirUsuario(usuario)
 
+    }
+
+    override fun confirmaAsistencia(usuario: Usuarios): Boolean {
+        return super.confirmaAsistencia(usuario)
+    }
+
+    override fun elimirarInscripcion(usuario: Usuarios) {
+        super.elimirarInscripcion(usuario)
     }
 }

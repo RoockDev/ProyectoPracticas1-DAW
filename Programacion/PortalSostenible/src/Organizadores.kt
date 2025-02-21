@@ -27,6 +27,7 @@ class Organizadores {
         eventosCreados.add(eventoCreado)
         return eventoCreado //DUDA REVISAR LUEGO PARA LA LISTA DE ORGANIZADORES EN CLASE EVENTO
     }
+
     fun crearEventoPresencial(nombre:String,fecha:String,ubicacion:String,direccion:String,categoria: CATEGORIAS):Presencial{
         var eventoPresencial = Presencial(direccion)
         eventoPresencial.nombre = nombre

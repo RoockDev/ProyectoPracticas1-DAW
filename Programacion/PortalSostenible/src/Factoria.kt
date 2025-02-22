@@ -1,30 +1,38 @@
 class Factoria {
-    companion object{
-        fun crearEvento(
-             tipo:String,
-             nombre : String,
-             fecha :String,
-             ubicacion :String,
-             categoria:CATEGORIAS,
-             atributoExtra:String=""
-        ):Evento{
-            return when(tipo.lowercase()){
-                "presencial" -> Presencial(atributoExtra).apply {
-                    this.nombre = nombre
-                    this.fecha = fecha
-                    this.ubicacion = ubicacion
-                    this.categoria
-                    this.direccion = atributoExtra
-                }
-                "online" -> Online(atributoExtra).apply {
-                    this.nombre = nombre
-                    this.fecha = fecha
-                    this.ubicacion = ubicacion
-                    this.categoria = categoria
-                    this.plataforma =atributoExtra
-                }
-                else -> Evento(nombre,fecha,ubicacion,categoria)
-            }
+    companion object {
+        fun nuevoOrganizor(): Organizadores {
+            var organizador = Organizadores(NOMBRES_RANDOM.obtenerAleatorio())
+
+            return organizador
         }
+
+        fun crearUsuarioAleatorio(): Usuarios {
+            var usuario = Usuarios(NOMBRES_RANDOM.obtenerAleatorio())
+            return usuario
+        }
+
+        // Para pruebas y simulaciones
+        fun crearEventoAletorio(): Evento {
+            var evento = Evento(
+                NOMBRES_EVENTO.obtenerAleatorio(),
+                FECHAS_EVENTO.obtenerAleatorio(),
+                UBICACIONES_EVENTO.obtenerAleatorio(),
+                CATEGORIAS.obtenerAleatorio()
+            )
+            return evento
+
+        }
+
+        // Para pruebas y simulaciones
+        fun crearMuchosEventosAletorios(): ArrayList<Evento> {
+            var listaDeEventos = ArrayList<Evento>()
+            var totalEventos = 10
+            for (i in 1..totalEventos) {
+                listaDeEventos.add(crearEventoAletorio())
+            }
+            return listaDeEventos
+        }
+
+
     }
 }

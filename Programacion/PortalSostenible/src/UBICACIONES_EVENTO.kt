@@ -1,7 +1,9 @@
-enum class CATEGORIAS {
-    TALLER,
-    CONFERENCIA,
-    OTRAS;
+enum class UBICACIONES_EVENTO {
+    MADRID,
+    BARCELONA,
+    VALENCIA,
+    SEVILLA,
+    BILBAO;
 
     companion object {
         fun obtenerAleatorio(): String {

@@ -21,16 +21,15 @@ class Online:Evento {
         super.inscribirUsuario(usuario)
     }
 
-    override fun confirmaAsistencia(usuario: Usuarios): Boolean {
-        return super.confirmaAsistencia(usuario)
-    }
+
 
     override fun elimirarInscripcion(usuario: Usuarios) {
         super.elimirarInscripcion(usuario)
     }
 
-
-
+    override fun toString(): String {
+        return "Online(plataforma='$plataforma', idOnline=$idOnline) ${super.toString()}"
+    }
 
 
 }

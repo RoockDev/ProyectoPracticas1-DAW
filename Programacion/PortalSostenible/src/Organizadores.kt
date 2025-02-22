@@ -1,3 +1,5 @@
+
+
 class Organizadores {
     var nombre = ""
     var nombreEmpresa = ""
@@ -13,6 +15,11 @@ class Organizadores {
         idOrganizador = contador
         contador++
     }
+    constructor(nombre: String){
+        this.nombre = nombre
+        idOrganizador = contador
+        contador++
+    }
 
     constructor(nombre:String, nombreEmpresa:String,correo:String){
         this.nombre = nombre
@@ -21,23 +28,66 @@ class Organizadores {
         idOrganizador = contador
         contador++
     }
+    fun eligeEventoAcrear():Evento{
+        var evento= Evento()
+        var eleccion = 0
+        var salir = false
+        do {
+            println("Que evento desea crear: [1]Generico, [2]Presencial,[3]Online,[4]Salir(Se crerara uno generico por defecto)")
+            eleccion = readln().toIntOrNull()?:-1
+            when(eleccion){
+                1->{
+                    evento =   crearEventoGenerico(
+                        NOMBRES_EVENTO.obtenerAleatorio(),
+                        FECHAS_EVENTO.obtenerAleatorio(),
+                        UBICACIONES_EVENTO.obtenerAleatorio(),
+                        CATEGORIAS.obtenerAleatorio()
+                    )
+                }
+                2->{
+                    evento = crearEventoPresencial(
+                        NOMBRES_EVENTO.obtenerAleatorio(),
+                        FECHAS_EVENTO.obtenerAleatorio(),
+                        UBICACIONES_EVENTO.obtenerAleatorio(),
+                        DIRECCIONES_EVENTO.obtenerAleatorio(),
+                        CATEGORIAS.obtenerAleatorio()
+                    )
+                }
+                3->{
+                    evento = crearEventoOnline(
+                        NOMBRES_EVENTO.obtenerAleatorio(),
+                        FECHAS_EVENTO.obtenerAleatorio(),
+                        UBICACIONES_EVENTO.obtenerAleatorio(),
+                        PLATAFORMAS_EVENTO.obtenerAleatorio(),
+                        CATEGORIAS.obtenerAleatorio()
+                    )
+                }
+                4-> salir = true
+            }
 
-    fun crearEventoGenerico(nombre:String,fecha:String,ubicacion:String,categoria: CATEGORIAS):Evento{
+        }while (eleccion !in 1..4 && !salir)
+        return evento
+    }
+
+
+
+
+    fun crearEventoGenerico(nombre:String,fecha:String,ubicacion:String,categoria: String):Evento{
         var eventoCreado = Evento(nombre,fecha,ubicacion,categoria)
         eventosCreados.add(eventoCreado)
         return eventoCreado //DUDA REVISAR LUEGO PARA LA LISTA DE ORGANIZADORES EN CLASE EVENTO
     }
 
-    fun crearEventoPresencial(nombre:String,fecha:String,ubicacion:String,direccion:String,categoria: CATEGORIAS):Presencial{
+    fun crearEventoPresencial(nombre:String,fecha:String,ubicacion:String,direccion:String,categoria: String):Presencial{
         var eventoPresencial = Presencial(direccion)
         eventoPresencial.nombre = nombre
         eventoPresencial.fecha = fecha
         eventoPresencial.ubicacion = ubicacion
         eventoPresencial.categoria = categoria
         eventosCreados.add(eventoPresencial)
-        return eventoPresencial //DUDA REVISAR LUEGO PARA LA LISTA DE ORGANIZADORES EN CLASE EVENTO
+        return eventoPresencial
     }
-    fun crearEventoOnline(nombre:String,fecha:String,ubicacion:String,plataforma:String,categoria: CATEGORIAS):Online{
+    fun crearEventoOnline(nombre:String,fecha:String,ubicacion:String,plataforma:String,categoria: String):Online{
         var eventoOnline = Online(plataforma)
         eventoOnline.nombre = nombre
         eventoOnline.fecha = fecha
@@ -46,79 +96,60 @@ class Organizadores {
         eventosCreados.add(eventoOnline)
         return eventoOnline //DUDA REVISAR LUEGO PARA LA LISTA DE ORGANIZADORES EN CLASE EVENTO
     }
-
-
-    fun modificarEventoGenerico(evento: Evento,nuevoNombre:String,nuevaFecha:String,nuevaUbicacion:String,categoria: CATEGORIAS){
-        if (evento in eventosCreados){
-            evento.nombre = nuevoNombre
-            evento.fecha = nuevaFecha
-            evento.ubicacion = nuevaUbicacion
-            evento.categoria = categoria
-            println("Evento modificado")
-        }else{
-            println("Ese evento no esta en tu lista, no puedes crearlo")
+    fun muestraInformacionEventoCreado(eventoCreado:Evento){
+        when(eventoCreado::class){ // se usa class para distinguir tipos exactos
+             Evento::class -> println("Has creado un evento Generico")
+             Presencial::class -> println("Has creado un evento Presencial")
+             Online::class -> println("Has creado un evento Online")
         }
-
     }
-    fun modificarEventoPresencial(eventoPresencial: Presencial,nuevoNombre:String,nuevaFecha:String,nuevaUbicacion:String,nuevaDireccion:String,categoria: CATEGORIAS){
-        if (eventoPresencial in eventosCreados){
-            eventoPresencial.nombre = nuevoNombre
-            eventoPresencial.fecha = nuevaFecha
-            eventoPresencial.ubicacion = nuevaUbicacion
-            eventoPresencial.direccion = nuevaDireccion
-            eventoPresencial.categoria = categoria
-            println("Evento Presencial modificado")
-        }else{
-            println("Ese evento no esta en tu lista, no puedes crearlo")
-        }
 
-    }
-    fun modificarEventoOnlinea(eventoOnline: Online,nuevoNombre:String,nuevaFecha:String,nuevaUbicacion:String,nuevaPlataforma:String,categoria: CATEGORIAS){
-        if (eventoOnline in eventosCreados){
-            eventoOnline.nombre = nuevoNombre
-            eventoOnline.fecha = nuevaFecha
-            eventoOnline.ubicacion = nuevaUbicacion
-            eventoOnline.plataforma = nuevaPlataforma
-            eventoOnline.categoria = categoria
-            println("Evento Online modificado")
-        }else{
-            println("Ese evento no esta en tu lista, no puedes crearlo")
-        }
+
+    fun modificarEvento(){
+
+        if (eventosCreados.isNotEmpty()){
+            var random = (0 until eventosCreados.size).random()
+            eventosCreados[random].nombre = NOMBRES_EVENTO.obtenerAleatorio()
+            eventosCreados[random].fecha = FECHAS_EVENTO.obtenerAleatorio()
+            eventosCreados[random].ubicacion = UBICACIONES_EVENTO.obtenerAleatorio()
+            eventosCreados[random].categoria = CATEGORIAS.obtenerAleatorio()
+            println("Evento ${eventosCreados[random].nombre
+            } modificado")
+        }else println("No hay eventos para modificar")
 
     }
 
-    fun liminarEventoGenerico(evento: Evento) {
-        if (evento in eventosCreados){
-            eventosCreados.remove(evento)
-            println("Evento ${evento.nombre} eliminado")
-        }else{
-            println("Este evento no lo has creado tu, por lo tanto no puedes eliminarlo")
+
+    fun eliminarEvento() {
+        if (eventosCreados.isNotEmpty()){
+            var random = (0 until eventosCreados.size).random()
+                val eventoEliminado = eventosCreados[random]
+                eventosCreados.remove(eventoEliminado)
+                println("Evento ${eventoEliminado.nombre} eliminado")
+            }else{
+                println("No hay eventos disponibles para eliminar")
+            }
         }
 
+    fun mostrarEventos(){
+        if (eventosCreados.isEmpty()){
+            println("El organizador ${nombre} no tiene ningun evento creado")
+        }else{
+            println("Eventos creados por ${nombre}")
+            for (evento in eventosCreados){
+                println(" - ${evento.nombre}")
+            }
+        }
     }
-
-    fun eliminiarEventoOnline(eventoOnline:Online){
-        if (eventoOnline in eventosCreados){
-            eventosCreados.remove(eventoOnline)
-            println("Evento online ${eventoOnline.nombre} eliminado")
-        }else{
-            println("Este evento no ha sido creado por ti, por lo tanto no puedes eliminarlo")
-        }
-
-    }
-
-    fun eliminarEventoPresencial(eventoPresencial:Presencial){
-        if (eventoPresencial in eventosCreados){
-            eventosCreados.remove(eventoPresencial)
-            println("Evento presencial ${eventoPresencial.nombre} eliminado")
-        }else{
-            println("Este evento no ha sido creado por ti, por lo tanto no puedes eliminarlo")
-        }
-
     }
 
 
 
 
 
-}
+
+
+
+
+
+

@@ -5,59 +5,60 @@ open class Evento {
     var usuariosInscritos = ArrayList<Usuarios>()
     var organizadoresParticipantes = ArrayList<Organizadores>()
     var usuariosAssitentes = ArrayList<Usuarios>()
-    var categoria = CATEGORIAS.OTRAS // por defecto
+    var categoria = ""
     var idEvento = 1
     var seRealiza = true
 
-    companion object{
+    companion object {
         private var contador = 1
     }
 
-    constructor(){
-        idEvento = contador
-        contador++
-    }
-    constructor(nombre:String,fecha:String,ubicacion:String,categorias: CATEGORIAS){
-        this.nombre = nombre
-        this.fecha = fecha
-        this.ubicacion = ubicacion
-        this.categoria = categoria
+    constructor() {
         idEvento = contador
         contador++
     }
 
-   open fun inscribirUsuario(usuario: Usuarios){
+    constructor(nombre: String, fecha: String, ubicacion: String, categorias: String) {
+        this.nombre = nombre
+        this.fecha = fecha
+        this.ubicacion = ubicacion
+        this.categoria = categorias
+        idEvento = contador
+        contador++
+    }
+
+    open fun inscribirUsuario(usuario: Usuarios) {
         usuariosInscritos.add(usuario)
     }
 
     // con este metodo comprobamos que solo pueda asistir un usuario si esta inscrito al evento
-    open fun confirmaAsistencia(usuario: Usuarios):Boolean{
+    open fun AsistenciaConfrimada(usuario: Usuarios): Boolean {
         var asiste = false
-        if (usuario in usuariosInscritos){
+        if (usuario in usuariosInscritos) {
             usuariosAssitentes.add(usuario)
             asiste = true
-        }else{
+        } else {
             println("El usuario no está inscrito, por lo tanto no puede asistir")
         }
         return asiste
     }
 
 
-    fun mostrarUsuariosInscritos():ArrayList<Usuarios>{
+    fun mostrarUsuariosInscritos(): ArrayList<Usuarios> {
         return usuariosInscritos
 
     }
 
     fun cancelarEvento() {
-        if (seRealiza){
+        if (seRealiza) {
             seRealiza = false
             println("El evento $nombre se ha cancelado")
-        }else{
+        } else {
             println("El evento $nombre ya estaba cancelado")
         }
     }
 
-    open fun elimirarInscripcion(usuario: Usuarios){
+    open fun elimirarInscripcion(usuario: Usuarios) {
         usuariosInscritos.remove(usuario)
 
     }

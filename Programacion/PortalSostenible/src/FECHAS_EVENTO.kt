@@ -4,6 +4,7 @@ enum class FECHAS_EVENTO(val fecha: String) {
     MARZO("20-03-2025"),
     ABRIL("25-04-2025"),
     MAYO("30-05-2025");
+
     companion object {
         fun obtenerAleatorio(): String {
             return values().random().name

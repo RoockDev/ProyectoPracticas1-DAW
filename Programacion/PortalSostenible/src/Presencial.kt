@@ -1,17 +1,17 @@
-class Presencial:Evento {
+class Presencial : Evento {
     var direccion = ""
     var idPresencial = 1
 
-    companion object{
+    companion object {
         private var contador = 1
     }
 
-    constructor():super(){          //super llama al constructor este caso vacio de la clase padre y asi su contador tambien funcionara
+    constructor() : super() {          //super llama al constructor este caso vacio de la clase padre y asi su contador tambien funcionara
         idPresencial = contador
         contador++
     }
 
-    constructor(direccion:String):super(){
+    constructor(direccion: String) : super() {
         this.direccion = direccion
         idPresencial = contador
         contador++

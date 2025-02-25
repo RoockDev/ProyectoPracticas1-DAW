@@ -6,12 +6,12 @@ class Online:Evento {
         private var contador = 1
     }
 
-    constructor():super(){
+    constructor() : super() {
         idOnline = contador
         contador++
     }
 
-    constructor(plataforma:String):super(){
+    constructor(plataforma: String) : super() {
         this.plataforma = plataforma
         idOnline = contador
         contador++
@@ -20,7 +20,6 @@ class Online:Evento {
     override fun inscribirUsuario(usuario: Usuarios) {
         super.inscribirUsuario(usuario)
     }
-
 
 
     override fun elimirarInscripcion(usuario: Usuarios) {

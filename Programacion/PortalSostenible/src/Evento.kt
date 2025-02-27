@@ -49,14 +49,7 @@ open class Evento {
 
     }
 
-    fun cancelarEvento() {
-        if (seRealiza) {
-            seRealiza = false
-            println("El evento $nombre se ha cancelado")
-        } else {
-            println("El evento $nombre ya estaba cancelado")
-        }
-    }
+
 
     open fun elimirarInscripcion(usuario: Usuarios) {
         usuariosInscritos.remove(usuario)
